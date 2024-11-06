@@ -1,0 +1,56 @@
+server:
+  port: 8080
+  
+spring:
+  jmx:
+    enabled: false
+  datasource:
+    url: jdbc:h2:mem:${DB_URL:spaceships}
+    username: ${DB_USER:sa}
+    password: ${DB_PASS:sa}
+    driver-class-name: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+    
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /api-docs/contract.html
+    
+logging:
+  level:
+    es:
+      w2m:
+        spaceships: DEBUG
+    org:
+      springframework: INFO
+    springdoc:
+      documentation: INFO
+
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:  health, info, metrics, prometheus

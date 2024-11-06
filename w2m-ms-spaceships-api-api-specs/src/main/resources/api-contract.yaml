@@ -1,0 +1,81 @@
+openapi: 3.0.2
+info:
+  title: Api contract for spaceships.
+  description: Operations for managing product prices associated with different brands
+  version: 1.0.0
+servers:
+  - url: /api/v3
+tags:
+  - name: ApiSpaceships
+    description: Operations related to product spaceships management
+paths:
+  /prices:
+    get:
+      tags:
+        - ApiSpaceships
+      summary: Retrieve the applicable price for a product
+      description: Gets the final price for a product from a given store depending on the date
+      operationId: searchPrices
+      parameters:
+        - name: application-date
+          in: query
+          description: Date on which the discount is applied, format YYYY-MM-DD-hh.mm.ss
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{4}-[01]\d-[0-3]\d-[0-2]\d.[0-5]\d.[0-5]\d$'
+            example: 2020-06-14-00.00.00
+        - name: product-id
+          in: query
+          description: id of the product to be consulted
+          required: true
+          schema:
+            type: string
+            example: 35455
+            pattern: '^[0-9]{1,5}$'
+        - name: brand-id
+          in: query
+          description: Id of the brand to be consulted
+          required: true
+          schema:
+            type: string
+            pattern: '^[0-9]{1,20}$'
+            example: 1
+      responses:
+        200:
+          description: price of the product successfully recovered
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiResponseSearchPrice'
+components:
+  schemas:
+    ApiResponseSearchPrice:
+      type: object
+      properties:
+        product-id:
+          type: string
+          description: product id.
+          example: 35455
+        brand-id:
+          type: string
+          description: brand id.
+          example: 1
+        rate-id:
+          type: string
+          description: rate id.
+          example: 1
+        start-date:
+          type: string
+          description: Starting date on which the indicated rate is applied
+          example: 2020-06-14-00.00.00
+        end-date:
+          type: string
+          description: Final date on which the indicated rate is applied
+          example: 2020-12-31-23.59.59
+        price:
+          type: number
+          description: final price of product
+          example: 35.5

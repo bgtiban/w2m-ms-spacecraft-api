@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>es.w2m.api</groupId>
+		<artifactId>w2m-ms-spaceships-api</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>w2m-ms-spaceships-api-api-specs</artifactId>
+	<name>${project.groupId}:${project.artifactId}</name>
+
+
+	<properties>
+		<!-- set this property to 'false' to generate controller's code from OpenAPI 
+			contract -->
+		<openapi.plugin.skip>true</openapi.plugin.skip>
+		<openapi.generator.maven.plugin.modelNameSuffix>Dto</openapi.generator.maven.plugin.modelNameSuffix>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+		</dependency>
+		<dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>openapi-generator</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<configuration>
+					<generatorName>spring</generatorName>
+					<skip>false</skip>
+					<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+					<typeMappings>
+						<typeMapping>OffsetDateTime=LocalDateTime</typeMapping>
+					</typeMappings>
+					<importMappings>
+						<importMapping>java.time.OffsetDateTime=java.time.LocalDateTime</importMapping>
+					</importMappings>
+					<configOptions>
+						<useJakartaEe>true</useJakartaEe>
+						<interfaceOnly>true</interfaceOnly>
+						<delegatePattern>true</delegatePattern>
+						<sourceFolder>src/java/main</sourceFolder>
+						<reactive>false</reactive>
+						<serializableModel>true</serializableModel>
+						<useBeanValidation>true</useBeanValidation>
+						<generateModelTests>true</generateModelTests>
+						<generateApiTests>true</generateApiTests>
+						<!-- <performBeanValidation>true</performBeanValidation> -->
+						<additionalProperties>
+							<additionalProperty>modelNamePrefix=Dto</additionalProperty>
+						</additionalProperties>
+						<useTags>true</useTags>
+					</configOptions>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generate-rest-api-v1</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/resources/api-contract.yaml</inputSpec>
+							<verbose>false</verbose>
+							<generatorName>spring</generatorName>
+							<apiPackage>es.w2m.api.api</apiPackage>
+							<modelPackage>es.w2m.api.model</modelPackage>
+							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+							<configOptions>
+								<delegatePattern>true</delegatePattern>
+								<apiPackage>es.w2m.api.rest.api</apiPackage>
+								<modelPackage>es.w2m.api.rest.model</modelPackage>
+								<invokerPackage>es.w2m.api.rest.invokers</invokerPackage>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.springdoc</groupId>
+				<artifactId>springdoc-openapi-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<outputFileName>contracts-api.yaml</outputFileName>
+							<outputDir>${project.build.directory}</outputDir>
+							<skip>${openapi.plugin.skip}</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
