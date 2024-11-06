@@ -1,81 +1,191 @@
 openapi: 3.0.2
 info:
-  title: Api contract for spaceships.
-  description: Operations for managing product prices associated with different brands
+  title: Api de naves espaciales
+  description: Operaciones para gestionar y buscar naves espaciales de películas y series
   version: 1.0.0
 servers:
   - url: /api/v3
 tags:
-  - name: ApiSpaceships
-    description: Operations related to product spaceships management
+  - name: ApiSpaceship
+    description: Operaciones para gestionar naves espaciales
+
 paths:
-  /prices:
+  /spaceships:
     get:
       tags:
-        - ApiSpaceships
-      summary: Retrieve the applicable price for a product
-      description: Gets the final price for a product from a given store depending on the date
-      operationId: searchPrices
+        - ApiSpaceship
+      summary: Obtener listado paginado de naves espaciales, admite filtros
+      description: Obtiene un listado paginado de todas las naves espaciales, se pueden aplicar filtros
+      operationId: searchSpaceships
+      security:
+        - BearerAuth: []
       parameters:
-        - name: application-date
+        - name: name
           in: query
-          description: Date on which the discount is applied, format YYYY-MM-DD-hh.mm.ss
-          required: true
+          description: Nombre completo o parcial de la nave
+          required: false
           schema:
             type: string
-            pattern: '^\d{4}-[01]\d-[0-3]\d-[0-2]\d.[0-5]\d.[0-5]\d$'
-            example: 2020-06-14-00.00.00
-        - name: product-id
+            example: Wing
+        - name: page
           in: query
-          description: id of the product to be consulted
-          required: true
+          description: número de paginas a obtener
+          required: false
           schema:
-            type: string
-            example: 35455
-            pattern: '^[0-9]{1,5}$'
-        - name: brand-id
-          in: query
-          description: Id of the brand to be consulted
-          required: true
-          schema:
-            type: string
-            pattern: '^[0-9]{1,20}$'
+            type: number
+            default: 1
+            minimum: 1
             example: 1
+        - name: size
+          in: query
+          description: número de elementos por página
+          required: false
+          schema:
+            type: number
+            default: 10
+            minimum: 1
+            example: 10
       responses:
         200:
-          description: price of the product successfully recovered
+          description: Obtención de datos satisfactoria
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ApiResponseSearchPrice'
+                $ref: '#/components/schemas/SpaceshipPage'
+        '404':
+          description: Nave espacial no encontrada
+
+    post:
+      tags:
+        - ApiSpaceship
+      summary: Crear nave
+      description: Crea una nueva nave espacial
+      operationId: createSpaceship
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Spaceship'
+      responses:
+        200:
+          description: Nave espacial creada correctamente
+    patch:
+      tags:
+        - ApiSpaceship
+      summary: Modifica nave espacial por Id
+      description: Modifica total o parcialmente una nave espacial
+      operationId: updateSpaceship
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Spaceship'
+      responses:
+        '200':
+          description: Nave espacial modificada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spaceship'
+
+  /spaceships/{spaceshipId}:
+    get:
+      tags:
+        - ApiSpaceship
+      summary: Obtener nave por Id
+      description: Obtiene los detalles de una nave espacial usando su identificador
+      operationId: getSpaceshipById
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: spaceshipId
+          in: path
+          required: true
+          description: Identificador único de la nave espacial
+          schema:
+            type: number
+            example: 1
+      responses:
+        '200':
+          description: Nave espacial encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spaceship'
+        '404':
+          description: Nave espacial no encontrada
+    delete:
+      tags:
+        - ApiSpaceship
+      summary: Elimina nave espacial por Id
+      description: Elimina definitivamente una nave espacial
+      operationId: deleteSpaceship
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: spaceshipId
+          in: path
+          required: true
+          description: Identificador único de la nave espacial
+          schema:
+            type: number
+            example: 1
+      responses:
+        '200':
+          description: Nave espacial eliminada correctamente
+        '404':
+          description: Nave espacial no encontrada
+
+security:
+  - BearerAuth: []
+
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Utiliza el token JWT para autenticar las solicitudes.
   schemas:
-    ApiResponseSearchPrice:
-      type: object
+    PageInfo:
       properties:
-        product-id:
-          type: string
-          description: product id.
-          example: 35455
-        brand-id:
-          type: string
-          description: brand id.
-          example: 1
-        rate-id:
-          type: string
-          description: rate id.
-          example: 1
-        start-date:
-          type: string
-          description: Starting date on which the indicated rate is applied
-          example: 2020-06-14-00.00.00
-        end-date:
-          type: string
-          description: Final date on which the indicated rate is applied
-          example: 2020-12-31-23.59.59
-        price:
+        pageNumber:
           type: number
-          description: final price of product
-          example: 35.5
+          description: número de página actual
+          example: 1
+        pageSize:
+          type: number
+          description: número de elementos por página
+          example: 10
+        totalPages:
+          type: number
+          description: número total de páginas
+          example: 2
+        totalSize:
+          type: number
+          description: número total de elementos
+          example: 20
+    Spaceship:
+      properties:
+        id:
+          type: number
+          description: identificador nave.
+          example: 1
+        name:
+          type: string
+          description: nombre de la nave.
+          example: X-Wing Starfighter
+    SpaceshipPage:
+      properties:
+        pageInfo:
+          $ref: '#/components/schemas/PageInfo'
+        spaceships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Spaceship'
