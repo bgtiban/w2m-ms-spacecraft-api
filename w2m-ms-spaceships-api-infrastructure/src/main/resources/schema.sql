@@ -1,1 +1,5 @@
--- DDL
+DROP TABLE IF EXISTS SPACESHIPS;
+CREATE TABLE SPACESHIPS (
+    ID BIGINT auto_increment COMMENT 'Spaceship Id',
+    NAME VARCHAR(250) COMMENT 'Spaceship name'
+);

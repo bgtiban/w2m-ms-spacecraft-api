@@ -1,4 +1,4 @@
-package es.w2m.boot.application;
+package es.w2m;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

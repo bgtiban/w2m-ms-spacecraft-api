@@ -24,7 +24,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<maven.compiler.forceJavacCompilerUse>true</maven.compiler.forceJavacCompilerUse>
+		<maven.compiler.forceLegacyJavacApi>true</maven.compiler.forceLegacyJavacApi>
 		<openapi.plugin.skip>false</openapi.plugin.skip>
 		<openapi-generator.version>7.9.0</openapi-generator.version>
 		<openapi.generator.maven.plugin.modelNameSuffix>Dto</openapi.generator.maven.plugin.modelNameSuffix>
@@ -85,16 +85,16 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.junit.jupiter</groupId>-->
+<!--			<artifactId>junit-jupiter-api</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.junit.jupiter</groupId>-->
+<!--			<artifactId>junit-jupiter-engine</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.xmlunit</groupId>
 			<artifactId>xmlunit-core</artifactId>
@@ -113,7 +113,7 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -225,16 +225,16 @@
 				<version>${logback-version}</version>
 			</dependency>
 
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-api</artifactId>
-				<version>${junit.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.junit.jupiter</groupId>
-				<artifactId>junit-jupiter-engine</artifactId>
-				<version>${junit.version}</version>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>org.junit.jupiter</groupId>-->
+<!--				<artifactId>junit-jupiter-api</artifactId>-->
+<!--				<version>${junit.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>org.junit.jupiter</groupId>-->
+<!--				<artifactId>junit-jupiter-engine</artifactId>-->
+<!--				<version>${junit.version}</version>-->
+<!--			</dependency>-->
 			<dependency>
 				<groupId>org.mapstruct</groupId>
 				<artifactId>mapstruct</artifactId>
