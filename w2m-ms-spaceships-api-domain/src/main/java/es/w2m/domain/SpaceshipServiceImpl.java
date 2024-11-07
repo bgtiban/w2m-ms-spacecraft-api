@@ -15,7 +15,13 @@ public class SpaceshipServiceImpl implements ISpaceshipService {
     @Override
     @Cacheable(value = "searchSpaceships", key = "#name + '_' + #page + '_' + #size")
     public PageableDomain searchSpaceships(String name, Integer page, Integer size) {
-        return spaceshipRepository.searchSpaceships(name, page, size);
+        PageableDomain pageableDomain = null;
+        if (name != null && !name.isBlank()) {
+            pageableDomain = spaceshipRepository.searchSpaceshipsWithPartialName(name, page, size);
+        } else {
+            pageableDomain = spaceshipRepository.searchSpaceships(page, size);
+        }
+        return pageableDomain;
     }
 
     @Override

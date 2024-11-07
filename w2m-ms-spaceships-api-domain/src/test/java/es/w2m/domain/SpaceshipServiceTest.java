@@ -26,11 +26,11 @@ public class SpaceshipServiceTest {
                 .pageInfo(new PageInfoDomain(1, 10, 2L, 20L))
                 .spaceships(List.of(new SpaceshipDomain(1L, "X-wing"), new SpaceshipDomain(2L, "wing-x")))
                 .build();
-        when(repository.searchSpaceships(any(), any(), any()))
+        when(repository.searchSpaceshipsWithPartialName(any(), any(), any()))
                 .thenReturn(pageableDomainExpected);
         PageableDomain pageableDomainActual = service.searchSpaceships("wing", 1,10);
 
-        verify(repository).searchSpaceships("wing", 1,10);
+        verify(repository).searchSpaceshipsWithPartialName("wing", 1,10);
         assertEquals(pageableDomainExpected, pageableDomainActual);
     }
 

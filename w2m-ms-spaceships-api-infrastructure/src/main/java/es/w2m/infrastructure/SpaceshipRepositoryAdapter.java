@@ -28,9 +28,15 @@ public class SpaceshipRepositoryAdapter implements ISpaceshipRepositoryPort {
     RabbitTemplate rabbitTemplate;
 
     @Override
-    public PageableDomain searchSpaceships(String name, Integer page, Integer size) {
+    public PageableDomain searchSpaceshipsWithPartialName(String name, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return mapper.toPageableDomain(repository.findByNameContainingIgnoreCase(name, pageable));
+    }
+
+    @Override
+    public PageableDomain searchSpaceships(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return mapper.toPageableDomain(repository.findAll(pageable));
     }
 
     @Override

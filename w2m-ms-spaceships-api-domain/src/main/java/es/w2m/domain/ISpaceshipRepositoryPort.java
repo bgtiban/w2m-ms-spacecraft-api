@@ -1,7 +1,9 @@
 package es.w2m.domain;
 
 public interface ISpaceshipRepositoryPort {
-    PageableDomain searchSpaceships(String name, Integer page, Integer size);
+    PageableDomain searchSpaceshipsWithPartialName(String name, Integer page, Integer size);
+
+    PageableDomain searchSpaceships(Integer page, Integer size);
 
     SpaceshipDomain searchSpaceshipById(Long id);
 
@@ -10,4 +12,5 @@ public interface ISpaceshipRepositoryPort {
     SpaceshipDomain updateSpaceship(SpaceshipDomain spaceship);
 
     void deleteSpaceshipById(Long spaceshipId);
+
 }
