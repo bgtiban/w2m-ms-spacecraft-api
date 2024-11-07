@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  # Este servicio se comenta para levantar únicamente la infra necesaria para desarollar MALSIN desde el STS o cualquier otro IDE..
+  #  malsin-backend:
+  #    build: .
+  #    depends_on:
+  #      - malsin-postgres
+  #      - w2m-spaceships-rabbitmq
+  #    ports:
+  #      -  "8070:8080"
+  #    networks:
+  #      malsin-network:
+  #        ipv4_address: 172.168.0.2
+
+  w2m-spaceships-rabbitmq:
+    image: rabbitmq:3.10.7-management-alpine
+    ports:
+      - 4369:4369
+      - 5671-5672:5671-5672
+      - 15671-15672:15671-15672
+      - 15691-15692:15691-15692
+      - 25672:25672
