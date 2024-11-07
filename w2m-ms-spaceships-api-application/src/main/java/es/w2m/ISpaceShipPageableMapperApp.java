@@ -25,6 +25,8 @@ public interface ISpaceShipPageableMapperApp {
 
     SpaceshipPageDto toDto(PageableDomain pageableDomain);
 
+    SpaceshipDomain toDomain(SpaceshipDto spaceshipDto);
+
     @Named("bigDecimalToLong")
     default BigDecimal bigDecimalToLong(Long id) {
         return id != null ? BigDecimal.valueOf(id) : null;

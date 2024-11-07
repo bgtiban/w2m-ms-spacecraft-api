@@ -34,50 +34,70 @@ public class SpaceshipServiceTest {
         assertEquals(pageableDomainExpected, pageableDomainActual);
     }
 
-//    @Test
-//    void testSearchSpaceshipByIdReturnSpaceship() {
-//        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder().build();
-//        when(repository.searchById(1L))
-//                .thenReturn(spaceshipDomainExpected);
-//
-//        SpaceshipDomain spaceshipDomainActual = service.searchById(1L);
-//
-//        verify(repository).findById(1L);
-//        assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
-//    }
-//
-//    @Test
-//    void createSpaceshipReturnSpaceshipCreated() {
-//        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder().build();
-//        when(repository.createSpaceship(any()))
-//                .thenReturn(spaceshipDomainExpected);
-//
-//        SpaceshipDomain spaceshipDomainActual = service.createSpaceship(spaceshipDomainExpected);
-//
-//        verify(repository).save();
-//        assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
-//    }
-//
-//    @Test
-//    void updateSpaceshipReturnUpdatedSpaceship() {
-//        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder().build();
-//        when(repository.updateSpaceship(any()))
-//                .thenReturn(spaceshipDomainExpected);
-//
-//        SpaceshipDomain spaceshipDomainActual = service.updateSpaceship(spaceshipDomainExpected);
-//
-//        verify(repository).update();
-//        assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
-//    }
-//
-//    @Test
-//    void deleteSpaceshipOk() {
-//        when(repository.deleteSpaceshipByid(1L))
-//                .thenReturn(1L);
-//
-//        totalDeleted = service.deleteSpaceshipById(1L);
-//
-//        verify(repository).deleteSpaceshipByid(1L);
-//        assertEquals(1L, totalDeleted);
-//    }
+    @Test
+    void testSearchSpaceshipByIdReturnSpaceship() {
+        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder()
+                .id(1L)
+                .build();
+        when(repository.searchSpaceshipById(1L))
+                .thenReturn(spaceshipDomainExpected);
+
+        SpaceshipDomain spaceshipDomainActual = service.searchSpaceshipById(1L);
+
+        verify(repository).searchSpaceshipById(1L);
+        assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
+    }
+
+    @Test
+    void shouldCreateSpaceship() {
+        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder()
+                .id(1L)
+                .name("X-wing")
+                .build();
+        when(repository.createSpaceship(spaceshipDomainExpected))
+                .thenReturn(spaceshipDomainExpected);
+
+        SpaceshipDomain spaceshipDomainActual = service.createSpaceship(spaceshipDomainExpected);
+
+        verify(repository).createSpaceship(spaceshipDomainExpected);
+        assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
+    }
+
+    @Test
+    void shouldCreateSpaceshipWithNewIdWhenIdIsNotPresent() {
+        String name = "X-wing";
+        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder()
+                .id(1L)
+                .name(name)
+                .build();
+        SpaceshipDomain spaceshipWithoutId = SpaceshipDomain.builder()
+                .id(null)
+                .name(name)
+                .build();
+        when(repository.createSpaceship(spaceshipWithoutId))
+                .thenReturn(spaceshipDomainExpected);
+
+        SpaceshipDomain spaceshipDomainActual = service.createSpaceship(spaceshipWithoutId);
+
+        verify(repository).createSpaceship(spaceshipWithoutId);
+        assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
+    }
+
+    @Test
+    void shouldUpdateSpaceshipReturningUpdatedSpaceship() {
+        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder().build();
+        when(repository.updateSpaceship(any()))
+                .thenReturn(spaceshipDomainExpected);
+
+        SpaceshipDomain spaceshipDomainActual = service.updateSpaceship(spaceshipDomainExpected);
+
+        verify(repository).updateSpaceship(any());
+        assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
+    }
+
+    @Test
+    void shouldDeleteSpaceshipWhenIdIsPresent() {
+        service.deleteSpaceshipById(1L);
+        verify(repository).deleteSpaceshipById(1L);
+    }
 }

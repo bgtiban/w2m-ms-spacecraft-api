@@ -59,7 +59,7 @@ paths:
       tags:
         - ApiSpaceship
       summary: Crear nave
-      description: Crea una nueva nave espacial
+      description: Crea una nueva nave espacial generando un nuevo Id siempre.
       operationId: createSpaceship
       security:
         - BearerAuth: []
@@ -72,6 +72,11 @@ paths:
       responses:
         200:
           description: Nave espacial creada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Spaceship'
+
     patch:
       tags:
         - ApiSpaceship

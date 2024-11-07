@@ -25,4 +25,6 @@ public interface ISpaceShipPageableMapperInfra {
     @Mapping(target = "spaceships", source = "content")
     @Mapping(target = "pageInfo", source = ".")
     PageableDomain toPageableDomain(Page<SpaceshipEntity> page);
+
+    SpaceshipEntity toEntity(SpaceshipDomain newSpaceship);
 }
