@@ -85,16 +85,10 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.junit.jupiter</groupId>-->
-<!--			<artifactId>junit-jupiter-api</artifactId>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.junit.jupiter</groupId>-->
-<!--			<artifactId>junit-jupiter-engine</artifactId>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.xmlunit</groupId>
 			<artifactId>xmlunit-core</artifactId>
@@ -224,17 +218,6 @@
 				<artifactId>logback-jackson</artifactId>
 				<version>${logback-version}</version>
 			</dependency>
-
-<!--			<dependency>-->
-<!--				<groupId>org.junit.jupiter</groupId>-->
-<!--				<artifactId>junit-jupiter-api</artifactId>-->
-<!--				<version>${junit.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>org.junit.jupiter</groupId>-->
-<!--				<artifactId>junit-jupiter-engine</artifactId>-->
-<!--				<version>${junit.version}</version>-->
-<!--			</dependency>-->
 			<dependency>
 				<groupId>org.mapstruct</groupId>
 				<artifactId>mapstruct</artifactId>
@@ -290,6 +273,11 @@
 				<groupId>${project.groupId}</groupId>
 				<artifactId>w2m-ms-spaceships-api-api-specs</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-aop</artifactId>
+				<version>3.3.5</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
