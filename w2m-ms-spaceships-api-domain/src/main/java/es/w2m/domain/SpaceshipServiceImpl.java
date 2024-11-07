@@ -1,5 +1,7 @@
 package es.w2m.domain;
 
+import es.w2m.domain.model.PageableDomainModel;
+import es.w2m.domain.model.SpaceshipDomainModel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,8 @@ public class SpaceshipServiceImpl implements ISpaceshipService {
 
     @Override
     @Cacheable(value = "searchSpaceships", key = "#name + '_' + #page + '_' + #size")
-    public PageableDomain searchSpaceships(String name, Integer page, Integer size) {
-        PageableDomain pageableDomain = null;
+    public PageableDomainModel searchSpaceships(String name, Integer page, Integer size) {
+        PageableDomainModel pageableDomain = null;
         if (name != null && !name.isBlank()) {
             pageableDomain = spaceshipRepository.searchSpaceshipsWithPartialName(name, page, size);
         } else {
@@ -25,17 +27,17 @@ public class SpaceshipServiceImpl implements ISpaceshipService {
     }
 
     @Override
-    public SpaceshipDomain searchSpaceshipById(Long id) {
+    public SpaceshipDomainModel searchSpaceshipById(Long id) {
         return spaceshipRepository.searchSpaceshipById(id);
     }
 
     @Override
-    public SpaceshipDomain createSpaceship(SpaceshipDomain newSpaceship) {
+    public SpaceshipDomainModel createSpaceship(SpaceshipDomainModel newSpaceship) {
         return spaceshipRepository.createSpaceship(newSpaceship);
     }
 
     @Override
-    public SpaceshipDomain updateSpaceship(SpaceshipDomain spaceshipDomainExpected) {
+    public SpaceshipDomainModel updateSpaceship(SpaceshipDomainModel spaceshipDomainExpected) {
         return spaceshipRepository.updateSpaceship(spaceshipDomainExpected);
     }
 

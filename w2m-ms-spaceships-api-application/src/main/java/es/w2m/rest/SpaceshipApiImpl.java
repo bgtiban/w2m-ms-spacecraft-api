@@ -1,4 +1,4 @@
-package es.w2m;
+package es.w2m.rest;
 
 import es.w2m.api.rest.api.ApiSpaceshipApi;
 import es.w2m.api.rest.model.SpaceshipDto;

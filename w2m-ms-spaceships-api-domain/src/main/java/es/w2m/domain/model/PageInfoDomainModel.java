@@ -1,4 +1,4 @@
-package es.w2m.domain;
+package es.w2m.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageInfoDomain {
+public class PageInfoDomainModel {
     Integer pageNumber;
     Integer pageSize;
     Long totalPages;

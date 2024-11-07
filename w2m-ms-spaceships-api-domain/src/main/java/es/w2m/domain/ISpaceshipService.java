@@ -1,14 +1,17 @@
 package es.w2m.domain;
 
+import es.w2m.domain.model.PageableDomainModel;
+import es.w2m.domain.model.SpaceshipDomainModel;
+
 public interface ISpaceshipService {
 
-    PageableDomain searchSpaceships(String name, Integer page, Integer size);
+    PageableDomainModel searchSpaceships(String name, Integer page, Integer size);
 
-    SpaceshipDomain searchSpaceshipById(Long id);
+    SpaceshipDomainModel searchSpaceshipById(Long id);
 
-    SpaceshipDomain createSpaceship(SpaceshipDomain newSpaceshipName);
+    SpaceshipDomainModel createSpaceship(SpaceshipDomainModel newSpaceshipName);
 
-    SpaceshipDomain updateSpaceship(SpaceshipDomain spaceshipDomainExpected);
+    SpaceshipDomainModel updateSpaceship(SpaceshipDomainModel spaceshipDomainExpected);
 
     void deleteSpaceshipById(Long spaceshipId);
 }

@@ -1,5 +1,8 @@
 package es.w2m.domain;
 
+import es.w2m.domain.model.PageInfoDomainModel;
+import es.w2m.domain.model.PageableDomainModel;
+import es.w2m.domain.model.SpaceshipDomainModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,13 +25,13 @@ public class SpaceshipServiceTest {
 
     @Test
     void testSearchSpaceshipsReturnPageableResults() {
-        PageableDomain pageableDomainExpected = PageableDomain.builder()
-                .pageInfo(new PageInfoDomain(1, 10, 2L, 20L))
-                .spaceships(List.of(new SpaceshipDomain(1L, "X-wing"), new SpaceshipDomain(2L, "wing-x")))
+        PageableDomainModel pageableDomainExpected = PageableDomainModel.builder()
+                .pageInfo(new PageInfoDomainModel(1, 10, 2L, 20L))
+                .spaceships(List.of(new SpaceshipDomainModel(1L, "X-wing"), new SpaceshipDomainModel(2L, "wing-x")))
                 .build();
         when(repository.searchSpaceshipsWithPartialName(any(), any(), any()))
                 .thenReturn(pageableDomainExpected);
-        PageableDomain pageableDomainActual = service.searchSpaceships("wing", 1,10);
+        PageableDomainModel pageableDomainActual = service.searchSpaceships("wing", 1,10);
 
         verify(repository).searchSpaceshipsWithPartialName("wing", 1,10);
         assertEquals(pageableDomainExpected, pageableDomainActual);
@@ -36,13 +39,13 @@ public class SpaceshipServiceTest {
 
     @Test
     void testSearchSpaceshipByIdReturnSpaceship() {
-        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder()
+        SpaceshipDomainModel spaceshipDomainExpected = SpaceshipDomainModel.builder()
                 .id(1L)
                 .build();
         when(repository.searchSpaceshipById(1L))
                 .thenReturn(spaceshipDomainExpected);
 
-        SpaceshipDomain spaceshipDomainActual = service.searchSpaceshipById(1L);
+        SpaceshipDomainModel spaceshipDomainActual = service.searchSpaceshipById(1L);
 
         verify(repository).searchSpaceshipById(1L);
         assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
@@ -50,14 +53,14 @@ public class SpaceshipServiceTest {
 
     @Test
     void shouldCreateSpaceship() {
-        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder()
+        SpaceshipDomainModel spaceshipDomainExpected = SpaceshipDomainModel.builder()
                 .id(1L)
                 .name("X-wing")
                 .build();
         when(repository.createSpaceship(spaceshipDomainExpected))
                 .thenReturn(spaceshipDomainExpected);
 
-        SpaceshipDomain spaceshipDomainActual = service.createSpaceship(spaceshipDomainExpected);
+        SpaceshipDomainModel spaceshipDomainActual = service.createSpaceship(spaceshipDomainExpected);
 
         verify(repository).createSpaceship(spaceshipDomainExpected);
         assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
@@ -66,18 +69,18 @@ public class SpaceshipServiceTest {
     @Test
     void shouldCreateSpaceshipWithNewIdWhenIdIsNotPresent() {
         String name = "X-wing";
-        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder()
+        SpaceshipDomainModel spaceshipDomainExpected = SpaceshipDomainModel.builder()
                 .id(1L)
                 .name(name)
                 .build();
-        SpaceshipDomain spaceshipWithoutId = SpaceshipDomain.builder()
+        SpaceshipDomainModel spaceshipWithoutId = SpaceshipDomainModel.builder()
                 .id(null)
                 .name(name)
                 .build();
         when(repository.createSpaceship(spaceshipWithoutId))
                 .thenReturn(spaceshipDomainExpected);
 
-        SpaceshipDomain spaceshipDomainActual = service.createSpaceship(spaceshipWithoutId);
+        SpaceshipDomainModel spaceshipDomainActual = service.createSpaceship(spaceshipWithoutId);
 
         verify(repository).createSpaceship(spaceshipWithoutId);
         assertEquals(spaceshipDomainExpected, spaceshipDomainActual);
@@ -85,11 +88,11 @@ public class SpaceshipServiceTest {
 
     @Test
     void shouldUpdateSpaceshipReturningUpdatedSpaceship() {
-        SpaceshipDomain spaceshipDomainExpected = SpaceshipDomain.builder().build();
+        SpaceshipDomainModel spaceshipDomainExpected = SpaceshipDomainModel.builder().build();
         when(repository.updateSpaceship(any()))
                 .thenReturn(spaceshipDomainExpected);
 
-        SpaceshipDomain spaceshipDomainActual = service.updateSpaceship(spaceshipDomainExpected);
+        SpaceshipDomainModel spaceshipDomainActual = service.updateSpaceship(spaceshipDomainExpected);
 
         verify(repository).updateSpaceship(any());
         assertEquals(spaceshipDomainExpected, spaceshipDomainActual);

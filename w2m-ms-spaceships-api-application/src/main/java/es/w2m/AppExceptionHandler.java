@@ -13,7 +13,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {RuntimeException.class})
     protected ResponseEntity<Object> handleException(final RuntimeException ex, final WebRequest request){
-    	return ResponseEntity.badRequest().build();
+    	return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
 }
