@@ -68,7 +68,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Spaceship'
+              $ref: '#/components/schemas/CreateSpaceship'
       responses:
         200:
           description: Nave espacial creada correctamente
@@ -176,6 +176,12 @@ components:
           type: number
           description: número total de elementos
           example: 20
+    CreateSpaceship:
+      properties:
+        name:
+          type: string
+          description: nombre de la nave.
+          example: X-Wing Starfighter
     Spaceship:
       properties:
         id:

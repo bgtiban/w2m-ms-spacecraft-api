@@ -1,7 +1,7 @@
 package es.w2m.boot;
 
-import es.w2m.rest.SpaceshipApiImpl;
 import es.w2m.api.rest.model.SpaceshipPageDto;
+import es.w2m.rest.SpaceshipApiImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,5 +1,6 @@
 package es.w2m.rest;
 
+import es.w2m.api.rest.model.CreateSpaceshipDto;
 import es.w2m.api.rest.model.PageInfoDto;
 import es.w2m.api.rest.model.SpaceshipDto;
 import es.w2m.api.rest.model.SpaceshipPageDto;
@@ -26,6 +27,8 @@ public interface ISpaceShipPageableMapperApp {
     SpaceshipPageDto toDto(PageableDomainModel pageableDomain);
 
     SpaceshipDomainModel toDomain(SpaceshipDto spaceshipDto);
+
+    SpaceshipDomainModel toDomain(CreateSpaceshipDto spaceshipDto);
 
     @Named("bigDecimalToLong")
     default BigDecimal bigDecimalToLong(Long id) {

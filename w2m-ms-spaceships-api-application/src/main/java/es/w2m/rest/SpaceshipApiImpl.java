@@ -1,6 +1,7 @@
 package es.w2m.rest;
 
 import es.w2m.api.rest.api.ApiSpaceshipApi;
+import es.w2m.api.rest.model.CreateSpaceshipDto;
 import es.w2m.api.rest.model.SpaceshipDto;
 import es.w2m.api.rest.model.SpaceshipPageDto;
 import es.w2m.domain.ISpaceshipService;
@@ -34,7 +35,7 @@ public class SpaceshipApiImpl implements ApiSpaceshipApi {
     }
 
     @Override
-    public ResponseEntity<SpaceshipDto> createSpaceship(SpaceshipDto spaceshipDto) {
+    public ResponseEntity<SpaceshipDto> createSpaceship(CreateSpaceshipDto spaceshipDto) {
         return ResponseEntity.ok(mapper
                 .toDto(service.createSpaceship(mapper.toDomain(spaceshipDto))));
     }
