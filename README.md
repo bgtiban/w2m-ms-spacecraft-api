@@ -38,12 +38,31 @@ Para la instalación en local del proyecto primero nos aseguraremos de cumplir c
   - 15672: RabbitMQ usará este puerto para proveer la web de administración del broker
 
 1) Importe el proyecto en su IDE preferido y **NO lo arranque todavía**
-2) Abra una consola, ubiquese en la ruta `...\w2m-ms-spaceships-api` y
-   ejecute `docker compose up`, debería poder acceder a la consola de administración de 
+2) Abra una consola, ubiquese en la ruta `...\w2m-ms-spaceships-api`
+3) Editar fichero `...\w2m-ms-spaceships-api\docker-compose.yml` de la siguiente forma:
+  ```YAML
+version: '3.9'
+services:
+#  w2m-spaceships-spaceships:
+#    image: bgtibant/w2m-spaceships
+#    depends_on:
+#      - w2m-spaceships-rabbitmq
+#    environment:
+#      - RABBITMQ_HOST=w2m-spaceships-rabbitmq
+#    ports:
+#      - "8080:8080"
+
+  w2m-spaceships-rabbitmq:
+    image: rabbitmq:3.10.7-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+```
+4) ejecute `docker compose up`, debería poder acceder a la consola de administración de 
    rabbitMQ en la url http://localhost:15672/, este paso levanta la cola de rabbit a la cual se contecará la app.
    - User: guest
    - Password: guest
-3) Arranque la aplicación springboot.
+5) Arranque la aplicación springboot.
 
 ## Ejemplo de uso
 
